@@ -87,7 +87,7 @@ class _TodoListState extends State<TodoList> {
   }
 
   void _addTodoItem(String name) {
-    if (name.isEmpty) {
+    if (name.trim().isEmpty) {
       return;
     }
 
