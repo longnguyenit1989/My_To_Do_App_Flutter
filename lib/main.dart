@@ -98,8 +98,6 @@ class _TodoListState extends State<TodoList> {
       _listMyTodo.add(myTodo);
     });
     _textFieldController.clear();
-
-    Navigator.of(context).pop();
   }
 
   void _handleTodoChange(MyTodo myTodo) {

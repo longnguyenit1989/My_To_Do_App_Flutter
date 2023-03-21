@@ -50,13 +50,21 @@ class _TodoDetailState extends State<TodoDetail> {
             }),
             const SizedBox(height: 20),
             TextButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  dialogManager.showMyDialog(
+                      TypeDialog.typeOptionYesNo, context, "Update dialog",
+                      message: "Do you want to update this todo ?")
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.blue, // Text Color
                 ),
                 child: const Text("Update")),
             TextButton(
-                onPressed: () => {},
+                onPressed: () => {
+                      dialogManager.showMyDialog(
+                          TypeDialog.typeOptionYesNo, context, "Delete dialog",
+                          message: "Do you want to delete this todo ?")
+                    },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red, // Text Color
                 ),

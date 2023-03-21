@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum TypeDialog { typeAddItemTodo, typeOption }
+enum TypeDialog { typeAddItemTodo, typeOptionYesNo }
 
 class DialogManager {
   var _isShowedDialog = false;
@@ -42,14 +42,15 @@ class DialogManager {
 
     switch (typeDialog) {
       case TypeDialog.typeAddItemTodo:
-        showDialogAddItemTodo();
+        _showDialogAddItemTodo();
         break;
-      case TypeDialog.typeOption:
+      case TypeDialog.typeOptionYesNo:
+        _showDialogOptionYesNo();
         break;
     }
   }
 
-  void showDialogAddItemTodo() {
+  void _showDialogAddItemTodo() {
     showDialog(
         context: context!,
         barrierDismissible: canDismiss ?? false,
@@ -63,12 +64,13 @@ class DialogManager {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(yesButtonLabel),
                 onPressed: () {
                   if (callBackYes != null) {
                     callBackYes!(textFieldController?.text ?? "");
                   }
+                  _dismissCurrentDialog();
                 },
+                child: Text(yesButtonLabel),
               ),
             ],
           );
@@ -77,7 +79,41 @@ class DialogManager {
     });
   }
 
-  void showDialogOption() {
+  void _showDialogOptionYesNo() {
+    showDialog(
+        context: context!,
+        barrierDismissible: canDismiss ?? false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(tittle),
+            content: Text(message),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    if (callBackYes != null) {
+                      callBackYes;
+                    }
+                    _dismissCurrentDialog();
+                  },
+                  child: Text(yesButtonLabel)),
+              TextButton(
+                  onPressed: () {
+                    if (callBackNo != null) {
+                      callBackNo;
+                    }
+                    _dismissCurrentDialog();
+                  },
+                  child: Text(noButtonLabel))
+            ],
+          );
+        }).then((value) {
+      _isShowedDialog = false;
+    });
+  }
 
+  void _dismissCurrentDialog() {
+    if (context != null) {
+      Navigator.of(context!).pop();
+    }
   }
 }
