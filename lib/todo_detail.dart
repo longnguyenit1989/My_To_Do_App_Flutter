@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app_flutter/main.dart';
 import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/ui/common/input_text_field_ui.dart';
 
@@ -81,7 +80,7 @@ class _TodoDetailState extends State<TodoDetail> {
                       message: "Do you want to delete this todo ?",
                       callBackYes: () {
                     widget.deleteItemTodoCallBack();
-                    
+
                     Navigator.pop(context);
                   });
                 },
