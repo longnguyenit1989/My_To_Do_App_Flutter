@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/todo_detail.dart';
 
 import 'database/database_helper.dart';
@@ -49,6 +50,8 @@ class _TodoListState extends State<TodoList> {
   final TextEditingController _textFieldController = TextEditingController();
   final List<MyTodo> _listMyTodo = <MyTodo>[];
 
+  final DialogManager dialogManager = DialogManager();
+
   @override
   void initState() {
     super.initState();
@@ -71,34 +74,15 @@ class _TodoListState extends State<TodoList> {
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => _displayDialog(),
+          onPressed: () => dialogManager.showMyDialog(
+                  TypeDialog.typeAddItemTodo, context, 'Add a new todo item',
+                  textFieldController: _textFieldController,
+                  yesButtonLabel: "Add",
+                  canDismiss: true, callBackYes: (String text) {
+                _addTodoItem(text);
+              }),
           tooltip: 'Add Item',
           child: const Icon(Icons.add)),
-    );
-  }
-
-  Future<void> _displayDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true, // user click out to dismiss dialog!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add a new todo item'),
-          content: TextField(
-            autofocus: true,
-            controller: _textFieldController,
-            decoration: const InputDecoration(hintText: 'Type your new todo'),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Add'),
-              onPressed: () {
-                _addTodoItem(_textFieldController.text);
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 
@@ -125,7 +109,11 @@ class _TodoListState extends State<TodoList> {
   }
 
   void _showTodoDetailScreen(MyTodo myTodoParam) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => TodoDetail(title: "Todo detail", myTodo: myTodoParam)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                TodoDetail(title: "Todo detail", myTodo: myTodoParam)));
   }
 
   Future<List<Map<String, dynamic>>> _queryAllRows() async {
@@ -140,11 +128,12 @@ class _TodoListState extends State<TodoList> {
 
   void getAllMyTodoFromSql() async {
     final result = await _queryAllRows();
-    result.forEach((element) {
-      final myTodo = MyTodo.fromMap(element);
-      _listMyTodo.add(myTodo);
-    });
 
-    setState(() {});
+    setState(() {
+      result.forEach((element) {
+        final myTodo = MyTodo.fromMap(element);
+        _listMyTodo.add(myTodo);
+      });
+    });
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:to_do_app_flutter/ui/common/input_text_field_ui.dart';
 
 import 'model/my_todo.dart';
 
@@ -20,8 +20,10 @@ class _TodoDetailState extends State<TodoDetail> {
   @override
   void initState() {
     super.initState();
-    _textFieldController.text = widget.myTodo.name;
-    setState(() {});
+
+    setState(() {
+      _textFieldController.text = widget.myTodo.name;
+    });
   }
 
   @override
@@ -37,10 +39,10 @@ class _TodoDetailState extends State<TodoDetail> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             StreamBuilder(builder: (context, snapshot) {
-              return TextField(
+              return InputTextField(
                 autofocus: true,
-                controller: _textFieldController,
-                decoration: const InputDecoration(hintText: 'Type your new todo'),
+                textFieldController: _textFieldController,
+                hintText: "Type your new todo",
               );
             }),
             const SizedBox(height: 20),
@@ -51,9 +53,13 @@ class _TodoDetailState extends State<TodoDetail> {
                 ),
                 child: const Text("Update")),
             TextButton(
-                onPressed: () => {
-                  Navigator.pop(context)
-                },
+                onPressed: () => {},
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.red, // Text Color
+                ),
+                child: const Text("Delete")),
+            TextButton(
+                onPressed: () => {Navigator.pop(context)},
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.black54, // Text Color
                 ),
@@ -63,6 +69,4 @@ class _TodoDetailState extends State<TodoDetail> {
       ),
     );
   }
-
-
 }
