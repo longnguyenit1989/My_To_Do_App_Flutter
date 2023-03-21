@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_flutter/main.dart';
 import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/ui/common/input_text_field_ui.dart';
 
@@ -7,8 +8,13 @@ import 'model/my_todo.dart';
 class TodoDetail extends StatefulWidget {
   final String title;
   final MyTodo myTodo;
+  final Function() deleteItemTodo;
 
-  const TodoDetail({Key? key, required this.title, required this.myTodo})
+  const TodoDetail(
+      {Key? key,
+      required this.title,
+      required this.myTodo,
+      required this.deleteItemTodo})
       : super(key: key);
 
   @override
@@ -51,26 +57,32 @@ class _TodoDetailState extends State<TodoDetail> {
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () => {
-                  dialogManager.showMyDialog(
-                      TypeDialog.typeOptionYesNo, context, "Update dialog",
-                      message: "Do you want to update this todo ?")
-                },
+                      dialogManager.showMyDialog(
+                          TypeDialog.typeOptionYesNo, context, "Update dialog",
+                          message: "Do you want to update this todo ?")
+                    },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.blue, // Text Color
                 ),
                 child: const Text("Update")),
             TextButton(
-                onPressed: () => {
-                      dialogManager.showMyDialog(
-                          TypeDialog.typeOptionYesNo, context, "Delete dialog",
-                          message: "Do you want to delete this todo ?")
-                    },
+                onPressed: () {
+                  dialogManager.showMyDialog(
+                      TypeDialog.typeOptionYesNo, context, "Delete dialog",
+                      message: "Do you want to delete this todo ?",
+                      callBackYes: () {
+                    widget.deleteItemTodo();
+                    Navigator.pop(context);
+                  });
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red, // Text Color
                 ),
                 child: const Text("Delete")),
             TextButton(
-                onPressed: () => {Navigator.pop(context)},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.black54, // Text Color
                 ),

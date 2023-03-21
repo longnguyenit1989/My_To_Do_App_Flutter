@@ -91,7 +91,7 @@ class DialogManager {
               TextButton(
                   onPressed: () {
                     if (callBackYes != null) {
-                      callBackYes;
+                      callBackYes!();
                     }
                     _dismissCurrentDialog();
                   },
@@ -99,7 +99,7 @@ class DialogManager {
               TextButton(
                   onPressed: () {
                     if (callBackNo != null) {
-                      callBackNo;
+                      callBackNo!();
                     }
                     _dismissCurrentDialog();
                   },

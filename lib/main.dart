@@ -22,7 +22,9 @@ Future<void> main() async {
 }
 
 class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
+  final MyTodo? myTodo = null;
+
+  const TodoApp({super.key, myTodo});
 
   // This widget is the root of your application.
   @override
@@ -100,6 +102,12 @@ class _TodoListState extends State<TodoList> {
     _textFieldController.clear();
   }
 
+  void _removeTodoItem(MyTodo myTodo) {
+    setState(() {
+      _listMyTodo.remove(myTodo);
+    });
+  }
+
   void _handleTodoChange(MyTodo myTodo) {
     setState(() {
       myTodo.checked = !myTodo.checked;
@@ -110,8 +118,12 @@ class _TodoListState extends State<TodoList> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                TodoDetail(title: "Todo detail", myTodo: myTodoParam)));
+            builder: (context) => TodoDetail(
+                title: "Todo detail",
+                myTodo: myTodoParam,
+                deleteItemTodo: () {
+                  _deleteTodo(myTodoParam);
+                })));
   }
 
   Future<List<Map<String, dynamic>>> _queryAllRows() async {
@@ -122,6 +134,14 @@ class _TodoListState extends State<TodoList> {
   void _insert(MyTodo myTodo) async {
     final row = myTodo.toMap();
     await dbHelper.insert(row);
+  }
+
+  void _deleteTodo(MyTodo myTodo) async {
+    await dbHelper.delete(myTodo.name);
+
+    setState(() {
+      _listMyTodo.remove(myTodo);
+    });
   }
 
   void getAllMyTodoFromSql() async {
