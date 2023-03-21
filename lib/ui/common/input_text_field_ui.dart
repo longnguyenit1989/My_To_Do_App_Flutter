@@ -27,6 +27,8 @@ class InputTextField extends StatelessWidget {
       autofocus: autofocus ?? false,
       controller: textFieldController,
       decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: "Content",
           hintText: hintText,
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black26)),

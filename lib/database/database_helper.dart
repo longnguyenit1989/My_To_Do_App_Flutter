@@ -5,10 +5,10 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseHelper {
   static const _databaseName = "MyDatabase.db";
   static const _databaseVersion = 1;
-  static const table = 'my_todo_table';
+  static const table = "my_todo_table";
 
-  static const columnId = '_id';
-  static const columnName = 'name';
+  static const columnId = "_id";
+  static const columnName = "name";
   static const columnChecked = "checked";
 
   late Database _db;
@@ -45,6 +45,13 @@ class DatabaseHelper {
   Future<int> update(Map<String, dynamic> row) async {
     int id = row[columnId];
     return await _db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateFollowName(String oldName, String newName) async {
+    final values = {columnName: newName};
+    const where = "$columnName = ?";
+    final whereArgs = [oldName];
+    return await _db.update(table, values, where: where, whereArgs: whereArgs);
   }
 
   Future<int> delete(String name) async {

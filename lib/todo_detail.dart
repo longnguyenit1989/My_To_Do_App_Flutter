@@ -8,13 +8,15 @@ import 'model/my_todo.dart';
 class TodoDetail extends StatefulWidget {
   final String title;
   final MyTodo myTodo;
-  final Function() deleteItemTodo;
+  final Function() deleteItemTodoCallBack;
+  final Function(MyTodo myTodoNew) updateItemTodoCallBack;
 
   const TodoDetail(
       {Key? key,
       required this.title,
       required this.myTodo,
-      required this.deleteItemTodo})
+      required this.deleteItemTodoCallBack,
+      required this.updateItemTodoCallBack})
       : super(key: key);
 
   @override
@@ -59,7 +61,14 @@ class _TodoDetailState extends State<TodoDetail> {
                 onPressed: () => {
                       dialogManager.showMyDialog(
                           TypeDialog.typeOptionYesNo, context, "Update dialog",
-                          message: "Do you want to update this todo ?")
+                          message: "Do you want to update this todo ?",
+                          callBackYes: () {
+                        final newMyTodo = MyTodo(
+                            name: _textFieldController.text, checked: false);
+                        widget.updateItemTodoCallBack(newMyTodo);
+
+                        Navigator.pop(context);
+                      })
                     },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.blue, // Text Color
@@ -71,7 +80,8 @@ class _TodoDetailState extends State<TodoDetail> {
                       TypeDialog.typeOptionYesNo, context, "Delete dialog",
                       message: "Do you want to delete this todo ?",
                       callBackYes: () {
-                    widget.deleteItemTodo();
+                    widget.deleteItemTodoCallBack();
+                    
                     Navigator.pop(context);
                   });
                 },

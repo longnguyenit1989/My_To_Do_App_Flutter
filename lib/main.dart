@@ -102,12 +102,6 @@ class _TodoListState extends State<TodoList> {
     _textFieldController.clear();
   }
 
-  void _removeTodoItem(MyTodo myTodo) {
-    setState(() {
-      _listMyTodo.remove(myTodo);
-    });
-  }
-
   void _handleTodoChange(MyTodo myTodo) {
     setState(() {
       myTodo.checked = !myTodo.checked;
@@ -119,11 +113,15 @@ class _TodoListState extends State<TodoList> {
         context,
         MaterialPageRoute(
             builder: (context) => TodoDetail(
-                title: "Todo detail",
-                myTodo: myTodoParam,
-                deleteItemTodo: () {
-                  _deleteTodo(myTodoParam);
-                })));
+                  title: "Todo detail",
+                  myTodo: myTodoParam,
+                  deleteItemTodoCallBack: () {
+                    _deleteTodo(myTodoParam);
+                  },
+                  updateItemTodoCallBack: (MyTodo myTodoNew) {
+                    _updateTodo(myTodoParam, myTodoNew);
+                  },
+                )));
   }
 
   Future<List<Map<String, dynamic>>> _queryAllRows() async {
@@ -141,6 +139,15 @@ class _TodoListState extends State<TodoList> {
 
     setState(() {
       _listMyTodo.remove(myTodo);
+    });
+  }
+
+  void _updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) async {
+    await dbHelper.updateFollowName(oldMyTodo.name, newMyTodo.name);
+
+    setState(() {
+      final indexNeedUpdate = _listMyTodo.indexOf(oldMyTodo);
+      _listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
     });
   }
 

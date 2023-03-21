@@ -1,7 +1,7 @@
 class MyTodo {
   MyTodo({required this.name, required this.checked});
 
-  final String name;
+  String name;
   bool checked;
 
   Map<String, dynamic> toMap() {

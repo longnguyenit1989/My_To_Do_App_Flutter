@@ -90,20 +90,20 @@ class DialogManager {
             actions: [
               TextButton(
                   onPressed: () {
-                    if (callBackYes != null) {
-                      callBackYes!();
-                    }
-                    _dismissCurrentDialog();
-                  },
-                  child: Text(yesButtonLabel)),
-              TextButton(
-                  onPressed: () {
                     if (callBackNo != null) {
                       callBackNo!();
                     }
                     _dismissCurrentDialog();
                   },
-                  child: Text(noButtonLabel))
+                  child: Text(noButtonLabel)),
+              TextButton(
+                  onPressed: () {
+                    if (callBackYes != null) {
+                      callBackYes!();
+                    }
+                    _dismissCurrentDialog();
+                  },
+                  child: Text(yesButtonLabel))
             ],
           );
         }).then((value) {
