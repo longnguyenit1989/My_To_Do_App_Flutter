@@ -36,7 +36,7 @@ class DialogManager {
     this.canDismiss = canDismiss;
     this.message = message ?? "";
     this.noButtonLabel = noButtonLabel ?? "No";
-    this.yesButtonLabel = noButtonLabel ?? "Yes";
+    this.yesButtonLabel = yesButtonLabel ?? "Yes";
     this.callBackNo = callBackNo;
     this.callBackYes = callBackYes;
 

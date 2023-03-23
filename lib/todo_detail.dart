@@ -61,7 +61,7 @@ class _TodoDetailState extends State<TodoDetail> {
                       dialogManager.showMyDialog(
                           TypeDialog.typeOptionYesNo, context, "Update dialog",
                           message: "Do you want to update this todo ?",
-                          callBackYes: () {
+                          canDismiss: true, callBackYes: () {
                         final newMyTodo = MyTodo(
                             name: _textFieldController.text, checked: false);
                         widget.updateItemTodoCallBack(newMyTodo);
@@ -78,7 +78,7 @@ class _TodoDetailState extends State<TodoDetail> {
                   dialogManager.showMyDialog(
                       TypeDialog.typeOptionYesNo, context, "Delete dialog",
                       message: "Do you want to delete this todo ?",
-                      callBackYes: () {
+                      canDismiss: true, callBackYes: () {
                     widget.deleteItemTodoCallBack();
 
                     Navigator.pop(context);
