@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/todo_detail.dart';
+import 'package:to_do_app_flutter/utils/NotificationService.dart';
 
 import 'database/database_helper.dart';
 import 'model/my_todo.dart';
 import 'item/todo_item.dart';
 
 final dbHelper = DatabaseHelper();
+final NotificationService notificationService = NotificationService();
 
 class Routes {
   static const String todoDetail = "/todo_detail";
@@ -17,6 +19,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize the database
   await dbHelper.init();
+  notificationService.initNotification();
 
   runApp(const TodoApp());
 }
@@ -82,6 +85,7 @@ class _TodoListState extends State<TodoList> {
                   yesButtonLabel: "Add",
                   canDismiss: true, callBackYes: (String text) {
                 _addTodoItem(text);
+                notificationService.showNotification(title: "Add item $text", body: "Success");
               }),
           tooltip: 'Add Item',
           child: const Icon(Icons.add)),
@@ -117,9 +121,11 @@ class _TodoListState extends State<TodoList> {
                   myTodo: myTodoParam,
                   deleteItemTodoCallBack: () {
                     _deleteTodo(myTodoParam);
+                    notificationService.showNotification(title: "Delete item ${myTodoParam.name}", body: "Success");
                   },
                   updateItemTodoCallBack: (MyTodo myTodoNew) {
                     _updateTodo(myTodoParam, myTodoNew);
+                    notificationService.showNotification(title: "Update item ${myTodoNew.name}", body: "Success");
                   },
                 )));
   }
