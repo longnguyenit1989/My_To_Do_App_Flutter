@@ -25,7 +25,7 @@ class TodoItem extends StatelessWidget {
       leading: CircleAvatar(
         child: Text(myTodo.name[0]),
       ),
-      title: Text(myTodo.name, style: _getTextStyle(myTodo.checked)),
+      title: Text(myTodo.name),
     );
   }
 

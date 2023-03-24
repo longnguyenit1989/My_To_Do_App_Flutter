@@ -63,7 +63,8 @@ class _TodoDetailState extends State<TodoDetail> {
                           message: "Do you want to update this todo ?",
                           canDismiss: true, callBackYes: () {
                         final newMyTodo = MyTodo(
-                            name: _textFieldController.text, checked: false);
+                            id: widget.myTodo.id,
+                            name: _textFieldController.text);
                         widget.updateItemTodoCallBack(newMyTodo);
 
                         Navigator.pop(context);

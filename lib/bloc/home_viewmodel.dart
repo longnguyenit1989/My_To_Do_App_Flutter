@@ -10,26 +10,25 @@ class HomeViewModel extends BaseViewModel {
 
   final List<MyTodo> listMyTodo = <MyTodo>[];
 
-  void addTodo(String value) {
-    final newMyTodo = MyTodo(name: value, checked: false);
-    listMyTodo.add(newMyTodo);
-  }
-
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     final allRows = await dbHelper.queryAllRows();
     return allRows;
   }
 
   void updateFollowName(MyTodo oldMyTodo, MyTodo newMyTodo) async {
-    await dbHelper.updateFollowName(oldMyTodo.name, newMyTodo.name);
+    await dbHelper.update(newMyTodo.toMap());
+    final indexNeedUpdate = listMyTodo.indexOf(oldMyTodo);
+    listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
   }
 
   void deleteTodo(MyTodo myTodo) {
-    dbHelper.delete(myTodo.name);
+    dbHelper.delete(myTodo.toMap());
+    listMyTodo.remove(myTodo);
   }
 
-  void insert(MyTodo myTodo) {
+  void insertTodo(MyTodo myTodo) {
     final row = myTodo.toMap();
     dbHelper.insert(row);
+    listMyTodo.add(myTodo);
   }
 }

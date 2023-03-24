@@ -88,7 +88,8 @@ class _TodoListState extends State<TodoList> {
                   yesButtonLabel: "Add",
                   canDismiss: true, callBackYes: (String text) {
                 _addTodoItem(text);
-                notificationService.showNotification(title: "Add item $text", body: "Success");
+                notificationService.showNotification(
+                    title: "Add item $text", body: "Success");
               }),
           tooltip: 'Add Item',
           child: const Icon(Icons.add)),
@@ -100,11 +101,9 @@ class _TodoListState extends State<TodoList> {
       return;
     }
 
-    final myTodo = MyTodo(name: name, checked: false);
-    homeViewModel.insert(myTodo);
-
     setState(() {
-      homeViewModel.listMyTodo.add(myTodo);
+      final myTodo = MyTodo(name: name);
+      homeViewModel.insertTodo(myTodo);
     });
     _textFieldController.clear();
   }
@@ -118,29 +117,28 @@ class _TodoListState extends State<TodoList> {
                   myTodo: myTodoParam,
                   deleteItemTodoCallBack: () {
                     _deleteTodo(myTodoParam);
-                    notificationService.showNotification(title: "Delete item ${myTodoParam.name}", body: "Success");
+                    notificationService.showNotification(
+                        title: "Delete item ${myTodoParam.name}",
+                        body: "Success");
                   },
                   updateItemTodoCallBack: (MyTodo myTodoNew) {
                     _updateTodo(myTodoParam, myTodoNew);
-                    notificationService.showNotification(title: "Update item ${myTodoNew.name}", body: "Success");
+                    notificationService.showNotification(
+                        title: "Update item ${myTodoNew.name}",
+                        body: "Success");
                   },
                 )));
   }
 
-  void _deleteTodo(MyTodo myTodo) async {
-    homeViewModel.deleteTodo(myTodo);
-
+  void _deleteTodo(MyTodo myTodo) {
     setState(() {
-      homeViewModel.listMyTodo.remove(myTodo);
+      homeViewModel.deleteTodo(myTodo);
     });
   }
 
   void _updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) {
-    homeViewModel.updateFollowName(oldMyTodo, newMyTodo);
-
     setState(() {
-      final indexNeedUpdate = homeViewModel.listMyTodo.indexOf(oldMyTodo);
-      homeViewModel.listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
+      homeViewModel.updateFollowName(oldMyTodo, newMyTodo);
     });
   }
 
