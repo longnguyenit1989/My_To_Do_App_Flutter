@@ -9,29 +9,22 @@ import 'database/database_helper.dart';
 import 'model/my_todo.dart';
 import 'item/todo_item.dart';
 
-late final DatabaseHelper dbHelper;
-late final NotificationService notificationService;
-late final DialogManager dialogManager;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  await initializedModule();
+
+  final dbHelper = getIt<DatabaseHelper>();
+  final notificationService = getIt<NotificationService>();
+  await dbHelper.init();
+  await notificationService.initNotification();
+
   runApp(const TodoApp());
 }
 
-Future<void> initializedModule() async {
-  dbHelper = getIt<DatabaseHelper>();
-  notificationService = getIt<NotificationService>();
-  dialogManager = getIt<DialogManager>();
-  await dbHelper.init();
-  await notificationService.initNotification();
-}
 
 class TodoApp extends StatelessWidget {
-  final MyTodo? myTodo = null;
 
-  const TodoApp({super.key, myTodo});
+  const TodoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +33,16 @@ class TodoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const TodoList(title: 'Todo App'),
+      home: TodoList(title: 'Todo App')
     );
   }
 }
 
 class TodoList extends StatefulWidget {
-  const TodoList({super.key, required this.title});
+  TodoList({super.key, required this.title});
 
+  final dialogManager = getIt<DialogManager>();
+  final notificationService = getIt<NotificationService>();
   final String title;
 
   @override
@@ -81,13 +76,13 @@ class _TodoListState extends State<TodoList> {
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => dialogManager.showMyDialog(
+          onPressed: () => widget.dialogManager.showMyDialog(
                   TypeDialog.typeAddItemTodo, context, 'Add a new todo item',
                   textFieldController: _textFieldController,
                   yesButtonLabel: "Add",
                   canDismiss: true, callBackYes: (String text) {
                 _addTodoItem(text);
-                notificationService.showNotification(
+                widget.notificationService.showNotification(
                     title: "Add item $text", body: "Success");
               }),
           tooltip: 'Add Item',
@@ -117,13 +112,13 @@ class _TodoListState extends State<TodoList> {
                   myTodo: myTodoParam,
                   deleteItemTodoCallBack: () {
                     _deleteTodo(myTodoParam);
-                    notificationService.showNotification(
+                    widget.notificationService.showNotification(
                         title: "Delete item ${myTodoParam.name}",
                         body: "Success");
                   },
                   updateItemTodoCallBack: (MyTodo myTodoNew) {
                     _updateTodo(myTodoParam, myTodoNew);
-                    notificationService.showNotification(
+                    widget.notificationService.showNotification(
                         title: "Update item ${myTodoNew.name}",
                         body: "Success");
                   },

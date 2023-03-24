@@ -25,10 +25,11 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i3.DatabaseHelper>(() => _i3.DatabaseHelper());
-    gh.factory<_i4.DialogManager>(() => _i4.DialogManager());
-    gh.factory<_i5.HomeViewModel>(() => _i5.HomeViewModel());
-    gh.factory<_i6.NotificationService>(() => _i6.NotificationService());
+    gh.singleton<_i3.DatabaseHelper>(_i3.DatabaseHelper());
+    gh.singleton<_i4.DialogManager>(_i4.DialogManager());
+    gh.factory<_i5.HomeViewModel>(
+        () => _i5.HomeViewModel(dbHelper: gh<_i3.DatabaseHelper>()));
+    gh.singleton<_i6.NotificationService>(_i6.NotificationService());
     return this;
   }
 }

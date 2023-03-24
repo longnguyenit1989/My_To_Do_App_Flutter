@@ -3,7 +3,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-@Injectable()
 @Singleton()
 class DatabaseHelper {
   static const _databaseName = "MyDatabase.db";

@@ -1,12 +1,17 @@
 
 import 'package:injectable/injectable.dart';
 import 'package:to_do_app_flutter/bloc/base_viewmodel.dart';
+import 'package:to_do_app_flutter/database/database_helper.dart';
 
 import '../main.dart';
 import '../model/my_todo.dart';
 
 @Injectable()
 class HomeViewModel extends BaseViewModel {
+
+  HomeViewModel({required this.dbHelper});
+
+  final DatabaseHelper dbHelper;
 
   final List<MyTodo> _listMyTodo = <MyTodo>[];
 

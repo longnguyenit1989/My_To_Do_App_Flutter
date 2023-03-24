@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 
 enum TypeDialog { typeAddItemTodo, typeOptionYesNo }
 
-@Injectable()
 @Singleton()
 class DialogManager {
   var _isShowedDialog = false;
