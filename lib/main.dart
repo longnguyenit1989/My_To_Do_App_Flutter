@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_flutter/bloc/home_viewmodel.dart';
+import 'package:to_do_app_flutter/di/di.dart';
 import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/todo_detail.dart';
 import 'package:to_do_app_flutter/utils/NotificationService.dart';
@@ -19,6 +21,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize the database
   await dbHelper.init();
+  await configureDependencies();
   notificationService.initNotification();
 
   runApp(const TodoApp());
@@ -53,9 +56,9 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
   final TextEditingController _textFieldController = TextEditingController();
-  final List<MyTodo> _listMyTodo = <MyTodo>[];
 
-  final DialogManager dialogManager = DialogManager();
+  final homeViewModel = getIt<HomeViewModel>();
+  final dialogManager = getIt<DialogManager>();
 
   @override
   void initState() {
@@ -71,7 +74,7 @@ class _TodoListState extends State<TodoList> {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        children: _listMyTodo.map((MyTodo myTodo) {
+        children: homeViewModel.listMyTodo.map((MyTodo myTodo) {
           return TodoItem(
             myTodo: myTodo,
             onTodoChanged: _showTodoDetailScreen,
@@ -98,18 +101,12 @@ class _TodoListState extends State<TodoList> {
     }
 
     final myTodo = MyTodo(name: name, checked: false);
-    _insert(myTodo);
+    homeViewModel.insert(myTodo);
 
     setState(() {
-      _listMyTodo.add(myTodo);
+      homeViewModel.listMyTodo.add(myTodo);
     });
     _textFieldController.clear();
-  }
-
-  void _handleTodoChange(MyTodo myTodo) {
-    setState(() {
-      myTodo.checked = !myTodo.checked;
-    });
   }
 
   void _showTodoDetailScreen(MyTodo myTodoParam) {
@@ -130,41 +127,31 @@ class _TodoListState extends State<TodoList> {
                 )));
   }
 
-  Future<List<Map<String, dynamic>>> _queryAllRows() async {
-    final allRows = await dbHelper.queryAllRows();
-    return allRows;
-  }
-
-  void _insert(MyTodo myTodo) async {
-    final row = myTodo.toMap();
-    await dbHelper.insert(row);
-  }
-
   void _deleteTodo(MyTodo myTodo) async {
-    await dbHelper.delete(myTodo.name);
+    homeViewModel.deleteTodo(myTodo);
 
     setState(() {
-      _listMyTodo.remove(myTodo);
+      homeViewModel.listMyTodo.remove(myTodo);
     });
   }
 
-  void _updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) async {
-    await dbHelper.updateFollowName(oldMyTodo.name, newMyTodo.name);
+  void _updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) {
+    homeViewModel.updateFollowName(oldMyTodo, newMyTodo);
 
     setState(() {
-      final indexNeedUpdate = _listMyTodo.indexOf(oldMyTodo);
-      _listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
+      final indexNeedUpdate = homeViewModel.listMyTodo.indexOf(oldMyTodo);
+      homeViewModel.listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
     });
   }
 
   void getAllMyTodoFromSql() async {
-    final result = await _queryAllRows();
+    final result = await homeViewModel.queryAllRows();
 
     setState(() {
-      result.forEach((element) {
+      for (var element in result) {
         final myTodo = MyTodo.fromMap(element);
-        _listMyTodo.add(myTodo);
-      });
+        homeViewModel.listMyTodo.add(myTodo);
+      }
     });
   }
 }

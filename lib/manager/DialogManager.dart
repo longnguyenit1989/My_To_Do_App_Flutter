@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 enum TypeDialog { typeAddItemTodo, typeOptionYesNo }
 
+@Injectable()
 class DialogManager {
   var _isShowedDialog = false;
 
