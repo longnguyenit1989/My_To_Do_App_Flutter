@@ -74,10 +74,10 @@ class _TodoListState extends State<TodoList> {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        children: homeViewModel.listMyTodo.map((MyTodo myTodo) {
+        children: homeViewModel.getListMyTodo().map((MyTodo myTodo) {
           return TodoItem(
             myTodo: myTodo,
-            onTodoChanged: _showTodoDetailScreen,
+            clickCallBack: _showTodoDetailScreen,
           );
         }).toList(),
       ),
@@ -102,7 +102,8 @@ class _TodoListState extends State<TodoList> {
     }
 
     setState(() {
-      final myTodo = MyTodo(name: name);
+      final int timeNowMilli = DateTime.now().millisecondsSinceEpoch;
+      final myTodo = MyTodo(id: timeNowMilli, name: name);
       homeViewModel.insertTodo(myTodo);
     });
     _textFieldController.clear();
@@ -138,7 +139,7 @@ class _TodoListState extends State<TodoList> {
 
   void _updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) {
     setState(() {
-      homeViewModel.updateFollowName(oldMyTodo, newMyTodo);
+      homeViewModel.updateTodo(oldMyTodo, newMyTodo);
     });
   }
 
@@ -148,7 +149,7 @@ class _TodoListState extends State<TodoList> {
     setState(() {
       for (var element in result) {
         final myTodo = MyTodo.fromMap(element);
-        homeViewModel.listMyTodo.add(myTodo);
+        homeViewModel.addItemMyTodo(myTodo);
       }
     });
   }

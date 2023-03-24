@@ -1,9 +1,9 @@
 import '../database/database_helper.dart';
 
 class MyTodo {
-  MyTodo({this.id, required this.name});
+  MyTodo({required this.id, required this.name});
 
-  int? id;
+  int id;
   String name;
 
   Map<String, dynamic> toMap() {

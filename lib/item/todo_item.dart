@@ -3,9 +3,9 @@ import 'package:to_do_app_flutter/model/my_todo.dart';
 
 class TodoItem extends StatelessWidget {
   final MyTodo myTodo;
-  final Function onTodoChanged;
+  final Function clickCallBack;
 
-  TodoItem({required this.myTodo, required this.onTodoChanged}) : super(key: ObjectKey(myTodo));
+  TodoItem({required this.myTodo, required this.clickCallBack}) : super(key: ObjectKey(myTodo));
 
   TextStyle? _getTextStyle(bool checked) {
     if (!checked) {return null;}
@@ -20,7 +20,7 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        onTodoChanged(myTodo);
+        clickCallBack(myTodo);
       },
       leading: CircleAvatar(
         child: Text(myTodo.name[0]),

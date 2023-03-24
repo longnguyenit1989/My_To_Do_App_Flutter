@@ -8,27 +8,35 @@ import '../model/my_todo.dart';
 @Injectable()
 class HomeViewModel extends BaseViewModel {
 
-  final List<MyTodo> listMyTodo = <MyTodo>[];
+  final List<MyTodo> _listMyTodo = <MyTodo>[];
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     final allRows = await dbHelper.queryAllRows();
     return allRows;
   }
 
-  void updateFollowName(MyTodo oldMyTodo, MyTodo newMyTodo) async {
+  void updateTodo(MyTodo oldMyTodo, MyTodo newMyTodo) async {
+    final indexNeedUpdate = _listMyTodo.indexOf(oldMyTodo);
+    _listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
     await dbHelper.update(newMyTodo.toMap());
-    final indexNeedUpdate = listMyTodo.indexOf(oldMyTodo);
-    listMyTodo.replaceRange(indexNeedUpdate, indexNeedUpdate + 1, [newMyTodo]);
   }
 
   void deleteTodo(MyTodo myTodo) {
     dbHelper.delete(myTodo.toMap());
-    listMyTodo.remove(myTodo);
+    _listMyTodo.remove(myTodo);
   }
 
   void insertTodo(MyTodo myTodo) {
     final row = myTodo.toMap();
     dbHelper.insert(row);
-    listMyTodo.add(myTodo);
+    _listMyTodo.add(myTodo);
+  }
+
+  void addItemMyTodo(MyTodo myTodo) {
+    _listMyTodo.add(myTodo);
+  }
+
+  List<MyTodo> getListMyTodo() {
+    return _listMyTodo;
   }
 }
