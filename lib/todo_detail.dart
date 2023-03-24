@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_flutter/di/di.dart';
 import 'package:to_do_app_flutter/manager/DialogManager.dart';
 import 'package:to_do_app_flutter/ui/common/input_text_field_ui.dart';
 
@@ -25,7 +26,7 @@ class TodoDetail extends StatefulWidget {
 class _TodoDetailState extends State<TodoDetail> {
   final TextEditingController _textFieldController = TextEditingController();
 
-  final DialogManager dialogManager = DialogManager();
+  final DialogManager dialogManager = getIt<DialogManager>();
 
   @override
   void initState() {

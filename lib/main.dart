@@ -9,22 +9,23 @@ import 'database/database_helper.dart';
 import 'model/my_todo.dart';
 import 'item/todo_item.dart';
 
-final dbHelper = DatabaseHelper();
-final NotificationService notificationService = NotificationService();
-
-class Routes {
-  static const String todoDetail = "/todo_detail";
-  static const String home = "/main";
-}
+late final DatabaseHelper dbHelper;
+late final NotificationService notificationService;
+late final DialogManager dialogManager;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // initialize the database
-  await dbHelper.init();
   await configureDependencies();
-  notificationService.initNotification();
-
+  await initializedModule();
   runApp(const TodoApp());
+}
+
+Future<void> initializedModule() async {
+  dbHelper = getIt<DatabaseHelper>();
+  notificationService = getIt<NotificationService>();
+  dialogManager = getIt<DialogManager>();
+  await dbHelper.init();
+  await notificationService.initNotification();
 }
 
 class TodoApp extends StatelessWidget {
@@ -32,7 +33,6 @@ class TodoApp extends StatelessWidget {
 
   const TodoApp({super.key, myTodo});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,7 +58,6 @@ class _TodoListState extends State<TodoList> {
   final TextEditingController _textFieldController = TextEditingController();
 
   final homeViewModel = getIt<HomeViewModel>();
-  final dialogManager = getIt<DialogManager>();
 
   @override
   void initState() {
