@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82441142504",
+    "project_id": "quotesapp-79c7d",
+    "storage_bucket": "quotesapp-79c7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82441142504:android:9a499df9fb465062bac95d",
+        "android_client_info": {
+          "package_name": "com.example.to_do_app_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82441142504-258c05pldjaq6qm04libg4sh13n1ed54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAorMZN-n16OfdHkIiebmPfPnXxsq7PnpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82441142504-258c05pldjaq6qm04libg4sh13n1ed54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
