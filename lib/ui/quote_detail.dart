@@ -59,7 +59,7 @@ class _QuoteDetailState extends State<QuoteDetail> {
       } else {
         int quoteId = widget.quote.id;
         Quote quote = Quote(quoteId, quoteDetailBloc.contentController.text,
-            quoteDetailBloc.authorController.text);
+            author: quoteDetailBloc.authorController.text);
         widget.quoteBloc.updateQuote(widget.index, quote);
       }
     });

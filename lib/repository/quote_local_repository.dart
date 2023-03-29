@@ -12,4 +12,9 @@ class QuoteLocalRepository {
       quoteDao.updateQuote(quote.id, quote.toMap());
 
   Future<int> deleteQuote(int quoteId) => quoteDao.deleteQuote(quoteId);
+
+  Future<void> deleteAllQuotes() => quoteDao.deleteAllQuotes();
+
+  Future<List<Object?>> insertQuotes(List<Quote> quotes) =>
+      quoteDao.insertQuotes(quotes);
 }

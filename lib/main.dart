@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -11,16 +10,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // final db = FirebaseFirestore.instance;
-  // final quote = <String, dynamic>{
-  //   "content": "Captain Teemo on duty",
-  //   "author": "Teemo"
-  // };
-
-  // db
-  //     .collection("quotes")
-  //     .add(quote)
-  //     .then((value) => print('DocumentSnapshot added with ID: ${value.id}'));
 
   runApp(const MyApp());
 }

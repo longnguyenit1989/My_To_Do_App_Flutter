@@ -11,8 +11,9 @@ class QuoteDao {
     return List.generate(quotes.length, (i) {
       return Quote(
         quotes[i][DbProvider.columnId],
+        firebaseId: quotes[i][DbProvider.columnFirebaseId],
         quotes[i][DbProvider.columnContent],
-        quotes[i][DbProvider.columnAuthor],
+        author: quotes[i][DbProvider.columnAuthor],
       );
     });
   }
@@ -32,5 +33,20 @@ class QuoteDao {
     final quoteDb = await quoteProvider.database;
     return await quoteDb.delete(DbProvider.tableQuote,
         where: '${DbProvider.columnId} = ?', whereArgs: [id]);
+  }
+
+  Future<void> deleteAllQuotes() async {
+    final quoteDb = await quoteProvider.database;
+    return await quoteDb.execute('DELETE FROM ${DbProvider.tableQuote}');
+  }
+
+  Future<List<Object?>> insertQuotes(List<Quote> quotes) async {
+    final quoteDb = await quoteProvider.database;
+    final batch = quoteDb.batch();
+    for (var quote in quotes) {
+      batch.insert(DbProvider.tableQuote, quote.toMap());
+    }
+    final result = await batch.commit();
+    return result;
   }
 }
