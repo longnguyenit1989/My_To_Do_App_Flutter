@@ -20,6 +20,28 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     quoteBloc.fetchAllQuotes();
+
+    quoteBloc.navigationController.stream.asBroadcastStream().listen((event) {
+      if (event == "update") {
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+      } else if (event == "delete") {
+        if (context.mounted) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      }
+    });
+
+    homeBloc.syncAndBackupController.stream.listen((event) {
+      print('home syncAndBackupController');
+      if (event == 'Sync') {
+        quoteBloc.fetchAllQuotes();
+      } else if (event == 'Backup') {
+        print("home homeBloc.syncAndBackupController.stream Backup");
+      }
+    });
   }
 
   @override
@@ -55,7 +77,7 @@ class _HomeState extends State<Home> {
   void _onOptionMenuSelected(String value) {
     switch (value) {
       case 'Backup':
-        // todo add to firestore
+        homeBloc.backupQuotes();
         break;
       case 'Sync':
         homeBloc.syncQuotes();

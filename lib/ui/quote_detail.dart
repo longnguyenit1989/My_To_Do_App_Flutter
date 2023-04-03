@@ -26,7 +26,9 @@ class _QuoteDetailState extends State<QuoteDetail> {
     AlertDialog alert = AlertDialog(
       content: const Text("Do you want to delete this quote?"),
       actions: [
-        TextButton(onPressed: () {}, child: const Text("No")),
+        TextButton(onPressed: () {
+          Navigator.pop(context);
+        }, child: const Text("No")),
         TextButton(
             onPressed: () async {
               widget.quoteBloc.deleteQuote(widget.index, widget.quote.id);

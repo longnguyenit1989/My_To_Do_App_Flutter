@@ -8,7 +8,6 @@ class DbProvider {
   static const tableQuote = 'quotes';
 
   static const columnId = '_id';
-  static const columnFirebaseId = 'firebaseId';
   static const columnContent = 'content';
   static const columnAuthor = 'author';
 
@@ -33,7 +32,6 @@ class DbProvider {
   Future _onCreate(Database db, int version) async {
     await db.execute("CREATE TABLE $tableQuote("
         "$columnId INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "$columnFirebaseId TEXT, "
         "$columnContent TEXT, "
         "$columnAuthor TEXT"
         ")");

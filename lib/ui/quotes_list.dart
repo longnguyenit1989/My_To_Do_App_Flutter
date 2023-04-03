@@ -11,15 +11,6 @@ class QuotesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    quoteBloc.navigationController.stream.asBroadcastStream().listen((event) {
-      if (event == "update") {
-        Navigator.pop(context);
-      } else if (event == "delete") {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      }
-    });
-
     return StreamBuilder(
         stream: quoteBloc.quotesController.stream,
         builder: (context, snapshot) {

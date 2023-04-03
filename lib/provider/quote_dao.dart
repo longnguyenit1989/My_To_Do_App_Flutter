@@ -11,7 +11,6 @@ class QuoteDao {
     return List.generate(quotes.length, (i) {
       return Quote(
         quotes[i][DbProvider.columnId],
-        firebaseId: quotes[i][DbProvider.columnFirebaseId],
         quotes[i][DbProvider.columnContent],
         author: quotes[i][DbProvider.columnAuthor],
       );

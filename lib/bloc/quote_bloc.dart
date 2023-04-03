@@ -13,14 +13,15 @@ class QuoteBloc implements BaseBloc {
 
   fetchAllQuotes() async {
     List<Quote> quotes = await _quoteLocalRepository.fetchAllQuotes();
+    this.quotes.clear();
     this.quotes.addAll(quotes);
-    print("quotes = ${quotes.length}");
+    print("fetchAllQuotes quotes = ${quotes.length}");
     quotesController.sink.add(quotes);
   }
 
   insertQuote(Quote quote) async {
     int resultId = await _quoteLocalRepository.insertQuote(quote);
-    print("resultId = $resultId");
+    print("insertQuote resultId = $resultId");
     if (resultId > 0) {
       quote.id = resultId;
       quotes.add(quote);
@@ -33,7 +34,7 @@ class QuoteBloc implements BaseBloc {
 
   updateQuote(int index, Quote quote) async {
     int resultId = await _quoteLocalRepository.updateQuote(quote);
-    print("resultId = $resultId");
+    print("updateQuote resultId = $resultId");
     if (resultId > 0) {
       quotes[index] = quote;
       quotesController.sink.add(quotes);
@@ -45,9 +46,10 @@ class QuoteBloc implements BaseBloc {
 
   deleteQuote(int index, int quoteId) async {
     int resultId = await _quoteLocalRepository.deleteQuote(quoteId);
-    print("resultId = $resultId");
+    print("deleteQuote resultId = $resultId");
     if (resultId > 0) {
       quotes.removeAt(index);
+      print('deleteQuote ${quotes.length}');
       quotesController.sink.add(quotes);
       navigationController.sink.add("delete");
     } else {
