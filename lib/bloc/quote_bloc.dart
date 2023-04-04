@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../model/quote.dart';
 import '../repository/quote_local_repository.dart';
+import '../service/notification_service.dart';
 import 'base_bloc.dart';
 
 class QuoteBloc implements BaseBloc {
@@ -27,6 +28,7 @@ class QuoteBloc implements BaseBloc {
       quotes.add(quote);
       quotesController.sink.add(quotes);
       navigationController.sink.add("add");
+      NotificationService().showNotification(title: quote.author, body: quote.content);
     } else {
       // todo: show error
     }
@@ -39,19 +41,21 @@ class QuoteBloc implements BaseBloc {
       quotes[index] = quote;
       quotesController.sink.add(quotes);
       navigationController.sink.add("update");
+      NotificationService().showNotification(title: quote.author, body: quote.content);
     } else {
       // todo: show error
     }
   }
 
-  deleteQuote(int index, int quoteId) async {
-    int resultId = await _quoteLocalRepository.deleteQuote(quoteId);
+  deleteQuote(int index, Quote quote) async {
+    int resultId = await _quoteLocalRepository.deleteQuote(quote.id);
     print("deleteQuote resultId = $resultId");
     if (resultId > 0) {
       quotes.removeAt(index);
       print('deleteQuote ${quotes.length}');
       quotesController.sink.add(quotes);
       navigationController.sink.add("delete");
+      NotificationService().showNotification(title: quote.author, body: quote.content);
     } else {
       // todo: show error
     }

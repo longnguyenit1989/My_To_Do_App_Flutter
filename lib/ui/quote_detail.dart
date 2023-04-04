@@ -31,7 +31,7 @@ class _QuoteDetailState extends State<QuoteDetail> {
         }, child: const Text("No")),
         TextButton(
             onPressed: () async {
-              widget.quoteBloc.deleteQuote(widget.index, widget.quote.id);
+              widget.quoteBloc.deleteQuote(widget.index, widget.quote);
             },
             child: const Text("Yes"))
       ],
