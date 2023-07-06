@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
                 onSelected: _onOptionMenuSelected)
           ],
         ),
+        backgroundColor: Colors.grey,
         body: QuotesList(quoteBloc: quoteBloc),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
