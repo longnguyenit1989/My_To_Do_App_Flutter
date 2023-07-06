@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:to_do_app_flutter/model/quote.dart';
 
 class ItemQuote extends StatelessWidget {
@@ -13,7 +14,7 @@ class ItemQuote extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(5),
         height: 150,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -26,59 +27,80 @@ class ItemQuote extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  child: Text(quote.author?[0] ?? ''),
-                ),
-                const SizedBox(height: 10),
-                const Text('bar')
-              ],
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    child: Text(quote.author?[0] ?? ''),
+                  ),
+                  const SizedBox(height: 10),
+                  RatingBar.builder(
+                    tapOnlyMode: false,
+                    itemSize: 12,
+                    itemCount: 5,
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.grey,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  )
+                ],
+              ),
             ),
             const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  quote.author ?? '',
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                // name author
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'dg1',
-                      textAlign: TextAlign.left,
-                      maxLines: 1,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .apply(fontSizeFactor: 0.8),
-                    ),
-                    const SizedBox(width: 5),
-                    Text('dg2',
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    quote.author ?? '',
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  // name author
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'dg1',
                         textAlign: TextAlign.left,
                         maxLines: 1,
                         style: DefaultTextStyle.of(context)
                             .style
-                            .apply(fontSizeFactor: 0.8))
-                  ],
-                ),
-                const SizedBox(height: 15),
-                const Text(
-                  'gia: 10,000',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
+                            .apply(fontSizeFactor: 0.8),
+                      ),
+                      const SizedBox(width: 5),
+                      Text('dg2',
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          style: DefaultTextStyle.of(context)
+                              .style
+                              .apply(fontSizeFactor: 0.8))
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  const Text('gia: 10,000',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis)
+                ],
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
+              flex: 6,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
