@@ -17,22 +17,33 @@ class QuotesList extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Quote> quotes = snapshot.data ?? [];
-            return ListView.builder(
-              itemCount: quotes.length,
-              itemBuilder: (context, index) {
-                return ItemQuote(quote: quotes[index], onTap: () {
-                  Quote quoteClick = quotes[index];
-                  QuoteDetail quoteDetail = QuoteDetail(
-                      quoteBloc: quoteBloc, index: index, quote: quoteClick);
-                  MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => quoteDetail);
-                  Navigator.push(context, route);
-                });
-              },
+            return RefreshIndicator(
+              onRefresh: _pullRefresh,
+              child: ListView.builder(
+                itemCount: quotes.length,
+                itemBuilder: (context, index) {
+                  return ItemQuote(
+                      quote: quotes[index],
+                      onTap: () {
+                        Quote quoteClick = quotes[index];
+                        QuoteDetail quoteDetail = QuoteDetail(
+                            quoteBloc: quoteBloc,
+                            index: index,
+                            quote: quoteClick);
+                        MaterialPageRoute route = MaterialPageRoute(
+                            builder: (context) => quoteDetail);
+                        Navigator.push(context, route);
+                      });
+                },
+              ),
             );
           } else {
             return const Center(child: Text("Hello world!"));
           }
         });
+  }
+
+  Future<void> _pullRefresh() async {
+    quoteBloc.fetchAllQuotes();
   }
 }
