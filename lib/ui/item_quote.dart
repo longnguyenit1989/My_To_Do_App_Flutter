@@ -14,7 +14,7 @@ class ItemQuote extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(10),
         height: 150,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -37,25 +37,20 @@ class ItemQuote extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   RatingBar.builder(
-                    tapOnlyMode: false,
-                    itemSize: 12,
+                    itemSize: 10,
                     itemCount: 5,
-                    initialRating: 3,
-                    minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
                     itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.grey,
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                    onRatingUpdate: (rating) {},
                   )
                 ],
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 5),
             Expanded(
               flex: 3,
               child: Column(
@@ -98,7 +93,7 @@ class ItemQuote extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 5),
             Expanded(
               flex: 6,
               child: Column(
