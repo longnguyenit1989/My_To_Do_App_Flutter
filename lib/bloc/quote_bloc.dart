@@ -34,6 +34,15 @@ class QuoteBloc implements BaseBloc {
     }
   }
 
+
+  insertQuoteNotSaveSql(Quote quote) async {
+      quotes.add(quote);
+      quotesController.sink.add(quotes);
+      navigationController.sink.add("add");
+      NotificationService().showNotification(title: quote.author, body: quote.content);
+  }
+
+
   updateQuote(int index, Quote quote) async {
     int resultId = await _quoteLocalRepository.updateQuote(quote);
     print("updateQuote resultId = $resultId");

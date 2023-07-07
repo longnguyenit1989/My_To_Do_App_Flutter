@@ -14,7 +14,6 @@ class ItemQuote extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(10),
         height: 150,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -37,7 +36,7 @@ class ItemQuote extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   RatingBar.builder(
-                    itemSize: 10,
+                    itemSize: 12.5,
                     itemCount: 5,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
@@ -50,7 +49,6 @@ class ItemQuote extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 5),
             Expanded(
               flex: 3,
               child: Column(
@@ -63,7 +61,6 @@ class ItemQuote extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  // name author
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -93,35 +90,37 @@ class ItemQuote extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 5),
             Expanded(
-              flex: 6,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    quote.content,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Text('(aaaaaaaaa)', textAlign: TextAlign.start),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            minimumSize: const Size(80, 20)),
-                        child: const Text('Bt'),
-                      ),
-                    ],
-                  ),
-                ],
+              flex: 5,
+              child: Container(
+                padding: const EdgeInsets.only(left: 5, right: 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      quote.content,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Text('(aaaaaaaaa)', textAlign: TextAlign.start),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              minimumSize: const Size(80, 25)),
+                          child: const Text('Bt'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
