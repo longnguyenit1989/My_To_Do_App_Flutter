@@ -31,8 +31,9 @@ class ItemQuote extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    child: Text(quote.author?[0] ?? ''),
+                  const CircleAvatar(
+                    // child: Text(quote.author?[0] ?? '',
+                    backgroundImage: NetworkImage("https://www.chudu24.com/wp-content/uploads/2017/03/canh-dep-nhat-ban-5.jpg"),
                   ),
                   const SizedBox(height: 10),
                   RatingBar.builder(
