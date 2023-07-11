@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app_flutter/ui/item_quote.dart';
 import 'package:to_do_app_flutter/ui/loading_overlay.dart';
 import 'package:to_do_app_flutter/ui/quote_detail.dart';
+import 'package:to_do_app_flutter/widgets/dialog.dart';
 
 import '../bloc/quote_bloc.dart';
 import '../model/quote.dart';
@@ -52,14 +53,17 @@ class _QuotesListState extends State<QuotesList> {
                       return ItemQuote(
                           quote: quotes[index],
                           onTap: () {
-                            Quote quoteClick = quotes[index];
-                            QuoteDetail quoteDetail = QuoteDetail(
-                                quoteBloc: widget.quoteBloc,
-                                index: index,
-                                quote: quoteClick);
-                            MaterialPageRoute route = MaterialPageRoute(
-                                builder: (context) => quoteDetail);
-                            Navigator.push(context, route);
+                            // Quote quoteClick = quotes[index];
+                            // QuoteDetail quoteDetail = QuoteDetail(
+                            //     quoteBloc: widget.quoteBloc,
+                            //     index: index,
+                            //     quote: quoteClick);
+                            // MaterialPageRoute route = MaterialPageRoute(
+                            //     builder: (context) => quoteDetail);
+                            // Navigator.push(context, route);
+
+                            DialogCustom dialogCustom = DialogCustom();
+                            dialogCustom.showMyDialog(typeDialog: TypeDialog.typeRating, context: context, title: 'Dialog rating', message: 'Please rating star');
                           });
                     },
                   ),
